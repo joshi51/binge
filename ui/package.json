@@ -9,8 +9,11 @@
     "start:prod": "NODE_ENV=production node build/server.js"
   },
   "dependencies": {
+    "bootstrap": "^4.3.1",
     "express": "^4.16.3",
+    "razzle-plugin-scss": "^3.0.0",
     "react": "^16.3.2",
+    "react-bootstrap": "^1.0.0-beta.9",
     "react-dom": "^16.3.2",
     "react-router-dom": "^4.2.2"
   },
@@ -22,8 +25,10 @@
     "@types/react-dom": "^16.0.5",
     "@types/react-router-dom": "^4.2.6",
     "@types/webpack-env": "^1.13.6",
+    "node-sass": "^4.12.0",
     "razzle": "^3.0.0",
     "razzle-plugin-typescript": "^3.0.0",
+    "sass-loader": "^7.1.0",
     "ts-jest": "^22.4.5",
     "tslint": "^5.10.0",
     "tslint-react": "^3.5.1",
