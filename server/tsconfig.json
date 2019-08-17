@@ -11,6 +11,7 @@
     "sourceMap": true,
     "inlineSources": true,
     "target": "es6",
+    "types": ["reflect-metadata"],
     "lib": [
       "es2017",
       "dom"
