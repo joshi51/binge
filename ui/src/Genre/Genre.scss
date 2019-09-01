@@ -1,0 +1,35 @@
+@import "../../scss/colors";
+img {
+  width: 100%;
+}
+
+.view-more {
+  display: flex;
+  justify-content: center;
+}
+
+.section {
+  background-color: $background;
+  .container {
+    text-align: center;
+
+    .heading {
+      font-size: 3em;
+      text-transform: uppercase;
+      font-weight: 700;
+      color: $white;
+      padding: 1em 0;;
+    }
+    .card {
+      margin: 1em 0;
+
+      .title {
+        padding: 1em;
+      }
+    }
+
+    .view-more {
+      color: $white;
+    }
+  }
+}
