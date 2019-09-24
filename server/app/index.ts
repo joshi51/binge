@@ -7,7 +7,9 @@ const cookieParser = require('cookie-parser');
 
 import {Bootstrap} from "./bootstrap";
 import {Symbols} from "./config/symbols";
+import {Connection} from "./connection/connection";
 const bootstrap = container.get<Bootstrap>(Symbols.Bootstrap);
+const connection = container.get<Connection>(Symbols.Connection);
 
 const app = express();
 app.use(cors({ origin: true, credentials: true }));
