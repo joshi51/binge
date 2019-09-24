@@ -1,12 +1,15 @@
-version: '3.1'
+version: '3.6'
 
 services:
 
   mongo:
-    image: mongo
+    image: mongo:latest
+    container_name: binge-mongo
     restart: always
     ports:
-      - "5151"
+      - 5151:27017
     environment:
-      MONGO_INITDB_ROOT_USERNAME: root
-      MONGO_INITDB_ROOT_PASSWORD: root
+      MONGO_INITDB_ROOT_USERNAME: admin
+      MONGO_INITDB_ROOT_PASSWORD: admin
+      MONGO_INITDB_DATABASE: bingedb
+      MONGO_DATA_DIR: /data/db

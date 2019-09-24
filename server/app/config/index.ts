@@ -1,2 +1,2 @@
-export * from './inversify.config';
 export * from './symbols';
+export * from './inversify.config';
