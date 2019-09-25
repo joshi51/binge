@@ -1,13 +1,23 @@
 export interface BingeSymbols {
-    ArticleRoutes: symbol;
+    Connection: symbol;
+    MovieRoutes: symbol;
+    MovieControllers: symbol;
+    MoviesSchema: symbol;
+    MovieServices: symbol
+    
     Config: symbol;
     Bootstrap: symbol;
-    Connection: symbol;
+    Schemas: symbol;
 }
 
 export const Symbols: BingeSymbols = {
-    ArticleRoutes: Symbol('ArticleRoutes'),
+    Connection: Symbol('Connection'),
+    MovieRoutes: Symbol('MovieRoutes'),
+    MovieControllers: Symbol('MovieControllers'),
+    MoviesSchema: Symbol('MoviesSchema'),
+    MovieServices: Symbol('MovieServices'),
+    
     Config: Symbol('Config'),
     Bootstrap: Symbol('Bootstrap'),
-    Connection: Symbol('Connection'),
+    Schemas: Symbol('Schemas')
 };
