@@ -4,7 +4,7 @@ import {injectable} from "inversify";
 @injectable()
 export class MoviesSchema {
     Schema = mongoose.Schema;
-    moviesSchema;
+    moviesSchema: mongoose.Schema;
     moviesModel;
     public initMovieSchema() {
         this.moviesSchema = new this.Schema({

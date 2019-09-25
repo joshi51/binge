@@ -12,4 +12,5 @@ services:
       MONGO_INITDB_ROOT_USERNAME: admin
       MONGO_INITDB_ROOT_PASSWORD: admin
       MONGO_INITDB_DATABASE: bingedb
-      MONGO_DATA_DIR: /data/db
+    volumes:
+      - ./binge-mongo:/data/db
