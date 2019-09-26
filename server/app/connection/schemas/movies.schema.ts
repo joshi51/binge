@@ -19,4 +19,6 @@ export class MoviesSchema {
     public getModel() {
         return this.moviesModel
     }
+    
+    
 }
