@@ -10,10 +10,12 @@ class BingeNav extends React.Component {
                 <Navbar.Toggle aria-controls="basic-navbar-nav" />
                 <Navbar.Collapse id="basic-navbar-nav">
                     <Nav className="mr-auto">
-                        <Nav.Link href="#home">Home</Nav.Link>
-                        <Nav.Link href="#link">Link</Nav.Link>
+                        <Nav.Link href="/">Home</Nav.Link>
+                        <Nav.Link href="/">Link</Nav.Link>
                     </Nav>
                 </Navbar.Collapse>
+                <Nav.Link href="/login">Login</Nav.Link>
+                <Nav.Link href="/signup">Sign Up</Nav.Link>
             </Navbar>
         );
     }
