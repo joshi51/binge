@@ -20,7 +20,8 @@
     "strict": true,
     "pretty": true,
     "suppressImplicitAnyIndexErrors": true,
-    "target": "es2016"
+    "target": "es2016",
+    "resolveJsonModule": true
   },
   "exclude": [
     "node_modules",
