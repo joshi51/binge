@@ -10,7 +10,6 @@ class Signup extends React.Component<{}, { email: string, password: string }> {
         };
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
-        console.log(this.props);
     }
     
     public handleChange(event: any) {
