@@ -2,6 +2,7 @@ import {inject, injectable} from "inversify";
 import {Symbols} from "../../config/symbols";
 import * as express from 'express';
 import {MovieServices} from "./movie.services";
+import {Movies} from "./interfaces";
 
 @injectable()
 export class MovieControllers {
@@ -14,7 +15,7 @@ export class MovieControllers {
         } catch (err) {
             console.log('ERROR:', err)
         }
-    }
+    };
     
     insertMovie = async (req: express.Request, res: express.Response) => {
         try {
@@ -24,5 +25,19 @@ export class MovieControllers {
         } catch (err) {
             console.log('ERROR:',err)
         }
-    }
+    };
+    
+    searchByTitle = async (req: express.Request, res: express.Response) => {
+        try {
+            let keyword = req.params.title;
+            let movie: Movies[] = await this.movieServices.searchByTitle(keyword);
+            if (movie.length) {
+                res.send(movie)
+            } else {
+            
+            }
+        } catch (err) {
+            console.log('ERROR:', err)
+        }
+    };
 }

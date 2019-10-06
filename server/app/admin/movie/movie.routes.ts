@@ -14,5 +14,6 @@ export class MovieRoutes {
     public register(app: express.Application) {
         app.get('/admin/movie/:id', this.movieControllers.getMovieById);
         app.post('/admin/movie', jsonParser, this.movieControllers.insertMovie);
+        app.get('/admin/search/:title', this.movieControllers.searchByTitle)
     }
 }
