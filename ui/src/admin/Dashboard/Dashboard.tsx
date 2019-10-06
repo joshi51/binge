@@ -30,7 +30,7 @@ class Dashboard extends React.Component<any, {keyword: string, apiData: any}> {
                     </Form.Group>
                     <Button variant="primary" type="submit" onClick={this.handleSearch}>Search</Button>
                 </Form>
-                {this.state.apiData ? <SelectGridList apiData={this.state.apiData.default}/> : ''}
+                {this.state.apiData ? <SelectGridList apiData={this.state.apiData.default.results}/> : ''}
             </Container>
         );
     }

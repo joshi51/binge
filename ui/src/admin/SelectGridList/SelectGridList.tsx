@@ -1,27 +1,37 @@
 import * as _ from 'lodash';
 import React from 'react';
-import { Card, Container } from 'react-bootstrap';
+import { Card, Container, Media, Row } from 'react-bootstrap';
+import './SelectGridList.scss';
 
 class SelectGridList extends React.Component<{apiData: any}, {movies: any}> {
     constructor(props: any) {
         super(props);
         this.state = {
-          movies: this.props.apiData.results
+          movies: this.props.apiData
         };
+        this.handleClick = this.handleClick.bind(this);
     }
+    
+    private handleClick(movie: any) {
+        console.log(movie);
+    }
+    
     private renderGrids() {
         const tmdbImageUsl = `https://image.tmdb.org/t/p/w500`;
-        return _.map(this.state.movies, (movie, key) => (
-            <Card style={{ width: '18rem' }} key={key}>
-                <Card.Img variant="top" src={`${tmdbImageUsl}${movie.poster_path}`} />
-                <Card.Body>
-                    <Card.Title>{movie.title}</Card.Title>
-                    <Card.Text>{movie.overview}</Card.Text>
-                </Card.Body>
-            </Card>
-        ));
+        return _.map(this.state.movies, (movie, key) => {
+            return (
+                <Media className="selectable" onClick={() => this.handleClick(movie)} key={key}>
+                    <img className="poster" src={`${tmdbImageUsl}${movie.poster_path}`} alt="Generic placeholder"/>
+                    <Media.Body>
+                        <h5>{movie.title}</h5>
+                        <p>{movie.overview}</p>
+                    </Media.Body>
+                </Media>
+            );
+        });
     }
     public render() {
+        console.log(this.state.movies);
         return (
             <Container>{this.renderGrids()}</Container>
         );
