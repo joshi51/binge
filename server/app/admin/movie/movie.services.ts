@@ -34,7 +34,7 @@ export class MovieServices {
             return movies;
         } else {
             let movieModel = this.movieSchema.getModel();
-            return movieModel.find({title: {$regex: `.*${keyword}.*`}});
+            return movieModel.find({title: {$regex: new RegExp(`${keyword}`, `gi`)}}).limit(20);
         }
     }
     

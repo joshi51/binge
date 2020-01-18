@@ -21,4 +21,7 @@ export class TMDBServices {
         }
         return axios.get(apiString);
     }
+    public insertFiltered() {
+    
+    }
 }
