@@ -1,6 +1,7 @@
 import "reflect-metadata";
 import {Container} from "inversify";
 import {MovieDi} from "../admin/movie";
+import { ServicesDi } from '../shared/services';
 import {Symbols} from "./symbols";
 import {Bootstrap} from "../bootstrap";
 import {ConnectionDi} from "../connection";
@@ -13,6 +14,7 @@ container.bind(Symbols.Config).toConstantValue(appSettings);
 ConnectionDi.registerDi(container, Symbols);
 MovieDi.registerDi(container, Symbols);
 SchemaDi.registerDi(container, Symbols);
+ServicesDi.registerDi(container, Symbols);
 
 container.bind<Bootstrap>(Symbols.Bootstrap).to(Bootstrap).inSingletonScope();
 export default container;

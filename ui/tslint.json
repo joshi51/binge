@@ -46,10 +46,10 @@
       "check-open-brace",
       "check-whitespace"
     ],
-    "quotemark": [true, "single", "jsx-double"],
+    "quotemark": [false, "single", "jsx-double", "avoid-escape"],
     "radix": true,
     "semicolon": [true, "always"],
-    "switch-default": true,
+    "switch-default": false,
     "trailing-comma": false,
     "triple-equals": [true, "allow-null-check"],
     "typedef": [true, "parameter", "property-declaration"],
