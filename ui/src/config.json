@@ -1,3 +1,4 @@
 {
-  "serverEndpoint": "http://localhost:1100"
+  "serverEndpoint": "http://localhost:1100",
+  "tmdbImageEndpoint": "https://image.tmdb.org/t/p/w500"
 }

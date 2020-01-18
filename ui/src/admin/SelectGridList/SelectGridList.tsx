@@ -1,6 +1,7 @@
 import * as _ from 'lodash';
 import React from 'react';
-import { Card, Container, Media, Row } from 'react-bootstrap';
+import { Container, Media } from 'react-bootstrap';
+import * as config from '../../config.json';
 import './SelectGridList.scss';
 
 class SelectGridList extends React.Component<{apiData: any}, {movies: any}> {
@@ -18,7 +19,7 @@ class SelectGridList extends React.Component<{apiData: any}, {movies: any}> {
     }
     
     private renderGrids() {
-        const tmdbImageUsl = `https://image.tmdb.org/t/p/w500`;
+        const tmdbImageUsl = config.tmdbImageEndpoint;
         return _.map(this.state.movies, (movie, key) => {
             return (
                 <Media className="selectable" onClick={() => this.handleClick(movie)} key={key}>
