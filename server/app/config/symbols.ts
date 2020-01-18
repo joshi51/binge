@@ -10,7 +10,10 @@ export interface BingeSymbols {
     Bootstrap: symbol;
     Schemas: symbol;
     TMDBServices: symbol;
-    LoggerService: symbol;
+    LoggerServices: symbol;
+    LoginServices: symbol;
+    LoginRoutes: symbol;
+    LoginControllers: symbol;
 }
 
 export const Symbols: BingeSymbols = {
@@ -25,5 +28,8 @@ export const Symbols: BingeSymbols = {
     Bootstrap: Symbol('Bootstrap'),
     Schemas: Symbol('Schemas'),
     TMDBServices: Symbol('TMDBServices'),
-    LoggerService: Symbol('Logger')
+    LoggerServices: Symbol('LoggerServices'),
+    LoginServices: Symbol('LoginServices'),
+    LoginRoutes: Symbol('LoginRoutes'),
+    LoginControllers: Symbol('LoginControllers')
 };
