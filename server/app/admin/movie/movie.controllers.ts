@@ -15,7 +15,7 @@ export class MovieControllers {
             let movie = await this.movieServices.getMovieById(movieId);
             this.loggerService.logResponseSent(res, req, movie);
         } catch (err) {
-            this.loggerService.logError(res, err);
+            this.loggerService.logErrorResponse(res, err);
         }
     };
     
@@ -25,18 +25,18 @@ export class MovieControllers {
             let movie = await this.movieServices.insertMovie(params);
             res.send(movie);
         } catch (err) {
-            this.loggerService.logError(res, err);
+            this.loggerService.logErrorResponse(res, err);
         }
     };
     
     searchByTitle = async (req: express.Request, res: express.Response) => {
         try {
-            const queryParams = req.query;
+            // const queryParams = req.query;
             const keyword = req.params.title;
-            const movie: Movies[] = await this.movieServices.searchByTitle(keyword, queryParams.fromapi);
+            const movie: Movies[] = await this.movieServices.searchByTitle(keyword);
             this.loggerService.logResponseSent(res, req, movie);
         } catch (err) {
-            this.loggerService.logError(res, err);
+            this.loggerService.logErrorResponse(res, err);
         }
     };
 }

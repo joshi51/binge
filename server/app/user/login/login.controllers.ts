@@ -18,7 +18,7 @@ export class LoginControllers {
             const user =  this.loginServices.verifyToken(token);
             this.loggerServices.logResponseSent(res, req, user);
         } catch (e) {
-            this.loggerServices.logError(res, e)
+            this.loggerServices.logErrorResponse(res, e)
         }
     }
 }
