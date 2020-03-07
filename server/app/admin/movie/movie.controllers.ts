@@ -3,19 +3,19 @@ import {Symbols} from "../../config/symbols";
 import * as express from 'express';
 import {MovieServices} from "./movie.services";
 import {Movies} from "./interfaces";
-import {LoggerService} from '../../shared';
+import {LoggerServices} from '../../shared';
 
 @injectable()
 export class MovieControllers {
     constructor(@inject(Symbols.MovieServices) private movieServices: MovieServices,
-                @inject(Symbols.LoggerService) private loggerService: LoggerService){}
+                @inject(Symbols.LoggerServices) private loggerService: LoggerServices){}
     getMovieById = async (req: express.Request, res: express.Response) => {
         try {
             let movieId = req.params.id;
             let movie = await this.movieServices.getMovieById(movieId);
-            res.send(movie)
+            this.loggerService.logResponseSent(res, req, movie);
         } catch (err) {
-            this.loggerService.logError(res, err);
+            this.loggerService.logErrorResponse(res, err);
         }
     };
     
@@ -25,18 +25,18 @@ export class MovieControllers {
             let movie = await this.movieServices.insertMovie(params);
             res.send(movie);
         } catch (err) {
-            console.log('ERROR:',err)
+            this.loggerService.logErrorResponse(res, err);
         }
     };
     
     searchByTitle = async (req: express.Request, res: express.Response) => {
         try {
-            const queryParams = req.query;
+            // const queryParams = req.query;
             const keyword = req.params.title;
-            const movie: Movies[] = await this.movieServices.searchByTitle(keyword, queryParams.fromapi);
-            res.send(movie);
+            const movie: Movies[] = await this.movieServices.searchByTitle(keyword);
+            this.loggerService.logResponseSent(res, req, movie);
         } catch (err) {
-            console.log('ERROR:', err)
+            this.loggerService.logErrorResponse(res, err);
         }
     };
 }

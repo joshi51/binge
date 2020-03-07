@@ -6,11 +6,19 @@ export interface BingeSymbols {
     MovieServices: symbol;
     MovieFactory: symbol;
     
+    UsersSchema: symbol;
+    
     Config: symbol;
     Bootstrap: symbol;
     Schemas: symbol;
     TMDBServices: symbol;
-    LoggerService: symbol;
+    LoggerServices: symbol;
+    LoginServices: symbol;
+    LoginRoutes: symbol;
+    RegisterRoutes: symbol;
+    LoginControllers: symbol;
+    RegisterServices: symbol;
+    RegisterControllers: symbol;
 }
 
 export const Symbols: BingeSymbols = {
@@ -21,9 +29,17 @@ export const Symbols: BingeSymbols = {
     MovieServices: Symbol('MovieServices'),
     MovieFactory: Symbol('MovieFactory'),
     
+    UsersSchema: Symbol('UsersSchema'),
+    
     Config: Symbol('Config'),
     Bootstrap: Symbol('Bootstrap'),
     Schemas: Symbol('Schemas'),
     TMDBServices: Symbol('TMDBServices'),
-    LoggerService: Symbol('Logger')
+    LoggerServices: Symbol('LoggerServices'),
+    LoginServices: Symbol('LoginServices'),
+    LoginRoutes: Symbol('LoginRoutes'),
+    RegisterRoutes: Symbol('RegisterRoutes'),
+    LoginControllers: Symbol('LoginControllers'),
+    RegisterServices: Symbol('RegisterServices'),
+    RegisterControllers: Symbol('RegisterControllers'),
 };

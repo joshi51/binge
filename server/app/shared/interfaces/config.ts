@@ -3,4 +3,5 @@ export interface Config {
     connectionString: string;
     tmdbApiKey: string;
     tmdbEndpoint: string;
+    saltRounds: string;
 }
