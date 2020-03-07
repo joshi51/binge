@@ -22,7 +22,6 @@ export class MoviesSchema {
             vote_average: Number,
             overview: String,
             release_date: String,
-            createdAt: String
         });
         this.moviesModel = mongoose.model('Movies', this.moviesSchema);
     }
