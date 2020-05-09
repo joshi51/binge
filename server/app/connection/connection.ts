@@ -12,7 +12,7 @@ export class Connection {
     }
     
     public connectToDb() {
-        mongoose.connect(this.config.connectionString, {
+        mongoose.connect(process.env.MONGODB_URI || this.config.connectionString, {
             useNewUrlParser: true,
             useUnifiedTopology: true,
         });

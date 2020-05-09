@@ -18,8 +18,7 @@ export class RegisterServices {
         if (!_.isEmpty(existingUser)) {
             throw new Error('Username or email already Exists');
         } else {
-            const salt = bcrypt.genSaltSync(this.config.saltRounds);
-            const passwordHash = bcrypt.hashSync(password, salt);
+            const passwordHash = bcrypt.hashSync(password, this.config.saltRounds);
             return userModel.insertMany({email, username, password: passwordHash, firstname, lastname})
         }
     }

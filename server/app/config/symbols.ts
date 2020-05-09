@@ -15,6 +15,7 @@ export interface BingeSymbols {
     LoggerServices: symbol;
     LoginServices: symbol;
     LoginRoutes: symbol;
+    LoginFactory: symbol;
     RegisterRoutes: symbol;
     LoginControllers: symbol;
     RegisterServices: symbol;
@@ -38,6 +39,7 @@ export const Symbols: BingeSymbols = {
     LoggerServices: Symbol('LoggerServices'),
     LoginServices: Symbol('LoginServices'),
     LoginRoutes: Symbol('LoginRoutes'),
+    LoginFactory: Symbol('LoginFactory'),
     RegisterRoutes: Symbol('RegisterRoutes'),
     LoginControllers: Symbol('LoginControllers'),
     RegisterServices: Symbol('RegisterServices'),

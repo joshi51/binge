@@ -4,4 +4,5 @@ export interface Config {
     tmdbApiKey: string;
     tmdbEndpoint: string;
     saltRounds: string;
+    secretKey: string;
 }

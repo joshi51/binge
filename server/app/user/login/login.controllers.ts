@@ -14,9 +14,8 @@ export class LoginControllers {
         try {
             const userName = req.body.username;
             const password = req.body.password;
-            const token = this.loginServices.loginUser(userName, password);
-            const user =  this.loginServices.verifyToken(token);
-            this.loggerServices.logResponseSent(res, req, user);
+            const token = await this.loginServices.loginUser(userName, password);
+            this.loggerServices.logResponseSent(res, req, {token});
         } catch (e) {
             this.loggerServices.logErrorResponse(res, e)
         }

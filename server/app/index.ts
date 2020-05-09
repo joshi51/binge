@@ -37,6 +37,6 @@ app.get('/', (req, res) => {
 
 const server = http.createServer(app);
 
-server.listen(config.apiPort, () => {
+server.listen(process.env.PORT || config.apiPort, () => {
     console.log(`listning to ${config.apiPort}`)
 });
