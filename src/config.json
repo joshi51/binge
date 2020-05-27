@@ -1,4 +1,10 @@
 {
-  "serverEndpoint": "http://localhost:1100",
-  "tmdbImageEndpoint": "https://image.tmdb.org/t/p/w500"
+  "development": {
+    "serverEndpoint": "http://localhost:1100",
+    "tmdbImageEndpoint": "https://image.tmdb.org/t/p/w500"
+  },
+  "production": {
+    "serverEndpoint": "https://binge-node.herokuapp.com",
+    "tmdbImageEndpoint": "https://image.tmdb.org/t/p/w500"
+  }
 }

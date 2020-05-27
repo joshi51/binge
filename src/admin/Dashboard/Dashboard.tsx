@@ -1,10 +1,11 @@
 import axios from 'axios';
 import React from 'react';
 import { Button, Container, Form } from 'react-bootstrap';
-import * as config from '../../config.json';
+import {config} from '../../shared/functions';
 import SelectGridList from '../SelectGridList/SelectGridList';
 
 class Dashboard extends React.Component<any, {keyword: string, apiData: any, apiCallCheckbox: any}> {
+    private config = config();
     constructor(props: any) {
         super(props);
         this.state = {
@@ -27,7 +28,7 @@ class Dashboard extends React.Component<any, {keyword: string, apiData: any, api
     }
     private handleSearch(event: any) {
         event.preventDefault();
-        let apiUrl = `${config.serverEndpoint}/admin/search/${this.state.keyword}`;
+        let apiUrl = `${this.config.serverEndpoint}/admin/search/${this.state.keyword}`;
         if (this.state.apiCallCheckbox) {
             apiUrl += `?fromapi=${this.state.apiCallCheckbox}`;
         }

@@ -4,6 +4,7 @@ import Carousel from 'react-bootstrap/Carousel';
 import { Genre } from '../Genre/Genre';
 import './Home.scss';
 import { Banner } from './interfaces';
+import {config} from '../shared/functions';
 
 class Home extends React.Component<{}, {}> {
     private bannerImages: Banner[]   = [
@@ -22,6 +23,7 @@ class Home extends React.Component<{}, {}> {
         },
     ];
     private renderItems = () => {
+        config();
         return _.map(this.bannerImages, (banner: Banner, index: number) => {
            return (
                <Carousel.Item key={index}>

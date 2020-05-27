@@ -1,10 +1,11 @@
 import * as _ from 'lodash';
 import React from 'react';
 import { Container, Media } from 'react-bootstrap';
-import * as config from '../../config.json';
+import {config} from '../../shared/functions';
 import './SelectGridList.scss';
 
 class SelectGridList extends React.Component<{apiData: any}, {movies: any}> {
+    private config = config();
     constructor(props: any) {
         super(props);
         console.log('props', props);
@@ -19,7 +20,8 @@ class SelectGridList extends React.Component<{apiData: any}, {movies: any}> {
     }
     
     private renderGrids() {
-        const tmdbImageUsl = config.tmdbImageEndpoint;
+        const tmdbImageUsl = this.config.tmdbImageEndpoint;
+        console.log(tmdbImageUsl);
         return _.map(this.state.movies, (movie, key) => {
             return (
                 <Media className="selectable" onClick={() => this.handleClick(movie)} key={key}>
