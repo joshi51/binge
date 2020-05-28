@@ -86,6 +86,7 @@
       "check-type",
       "check-typecast"
     ],
-    "ordered-imports": false
+    "ordered-imports": false,
+    "jsx-boolean-value": false
   }
 }

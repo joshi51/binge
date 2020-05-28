@@ -1,13 +1,13 @@
 import React from 'react';
 import { Route, Switch } from 'react-router-dom';
-import '../scss/custom.scss';
 import Dashboard from './admin/Dashboard/Dashboard';
-import './App.css';
 import BingeNav from './BingeNav/BingeNav';
 import { BaseRoutes } from './BingeNav/enums';
+import Footer from './Footer/Footer';
 import Home from './Home/Home';
 import Login from './Login/Login';
 import Signup from './Signup/Signup';
+import '../scss/custom.scss';
 
 const App = () => (
     <React.Fragment>
@@ -31,6 +31,7 @@ const DefaultComponents = () => (
     <React.Fragment>
         <BingeNav type={BaseRoutes.DEFAULT}/>
         <Route exact={true} path="/" component={Home} />
+        <Footer/>
     </React.Fragment>
 );
 
