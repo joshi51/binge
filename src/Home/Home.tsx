@@ -1,7 +1,7 @@
 import * as _ from 'lodash';
 import React from 'react';
 import Carousel from 'react-bootstrap/Carousel';
-import { Genre } from '../Genre/Genre';
+import Genre from '../Genre/Genre';
 import './Home.scss';
 import { Banner } from './interfaces';
 import {config} from '../shared/functions';

@@ -1,6 +1,7 @@
 export interface GenreList {
-    title: string;
-    image: string;
-    route: string;
-    name: string;
+  '_id': string;
+  'id': number;
+  'name': string;
+  'featured'?: boolean;
+  'image'?: string;
 }

@@ -1,25 +1,44 @@
 import { map } from 'lodash';
 import * as React from 'react';
 import './Genre.scss';
+import { config } from '../shared/functions';
+import { globalCss } from '../shared/material-ui-global';
 import { GenreList } from './interfaces';
-import {Grid, Container} from '@material-ui/core';
+import { Grid, Container, withStyles } from '@material-ui/core';
+import axios from 'axios';
 
-export class Genre extends React.Component {
-  private dummyImg = `https://res.cloudinary.com/dayo7ui1r/image/upload/w_360,h_240/v1565431382/Binge/arrival.jpg`;
-  private genres: GenreList[] = [
-    {title: 'rom-com1', name: 'rom-com', image: this.dummyImg, route: '/genre'},
-    {title: 'rom-com2', name: 'rom-com', image: this.dummyImg, route: '/genre'},
-    {title: 'rom-com3', name: 'rom-com', image: this.dummyImg, route: '/genre'},
-    {title: 'rom-com4', name: 'rom-com', image: this.dummyImg, route: '/genre'},
-    {title: 'rom-com5', name: 'rom-com', image: this.dummyImg, route: '/genre'},
-    {title: 'rom-com5', name: 'rom-com', image: this.dummyImg, route: '/genre'},
-  ];
+const styles = (theme: any) => ({
+  genreGrid: {
+    padding: '1rem'
+  }
+});
+
+class Genre extends React.Component<any, { genres: GenreList[] }> {
+  private config = config();
+  
+  constructor(props: any) {
+    super(props);
+    this.state = {
+      genres: []
+    };
+    this.getFeaturedGenres();
+  }
+  
+  private getFeaturedGenres() {
+    const getFeaturedGenreApi = `${this.config.serverEndpoint}/genres/featured`;
+    axios.get(getFeaturedGenreApi)
+      .then((res) => {
+        this.setState({genres: res.data});
+      })
+      .catch((err) => alert(err));
+  }
   
   private renderGenreRow() {
-    return map(this.genres, (genre, key) => {
-      return (<Grid item xs={4} key={key}>
+    const { classes }: any = this.props;
+    return map(this.state.genres, (genre, key) => {
+      return (<Grid item lg={4} md={4} sm={12} xs={12} key={key} className={`${classes.genreGrid} genre-grid`}>
         <div className="image"><img src={genre.image} alt={genre.name}/></div>
-        <div className="title"><span>{genre.title}</span></div>
+        <div className="title"><span>{genre.name}</span></div>
       </Grid>);
     });
   }
@@ -38,3 +57,5 @@ export class Genre extends React.Component {
     );
   }
 }
+
+export default withStyles(styles)(Genre);
