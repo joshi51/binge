@@ -2,9 +2,8 @@ import { map } from 'lodash';
 import * as React from 'react';
 import './Genre.scss';
 import { config } from '../shared/functions';
-import { globalCss } from '../shared/material-ui-global';
 import { GenreList } from './interfaces';
-import { Grid, Container, withStyles } from '@material-ui/core';
+import { Grid, Container, withStyles, Snackbar } from '@material-ui/core';
 import axios from 'axios';
 
 const styles = (theme: any) => ({
@@ -13,15 +12,26 @@ const styles = (theme: any) => ({
   }
 });
 
-class Genre extends React.Component<any, { genres: GenreList[] }> {
+class Genre extends React.Component<any, { genres: GenreList[], open: boolean, alertMsg: string }> {
   private config = config();
   
   constructor(props: any) {
     super(props);
     this.state = {
-      genres: []
+      genres: [],
+      open: false,
+      alertMsg: ''
     };
+    this.handleClose = this.handleClose.bind(this);
     this.getFeaturedGenres();
+  }
+  
+  private showAlert(msg: string) {
+    this.setState({...this.state, open: true, alertMsg: msg});
+  }
+  
+  private handleClose() {
+    this.setState({...this.state, open: false});
   }
   
   private getFeaturedGenres() {
@@ -30,7 +40,7 @@ class Genre extends React.Component<any, { genres: GenreList[] }> {
       .then((res) => {
         this.setState({genres: res.data});
       })
-      .catch((err) => alert(err));
+      .catch((err) => this.showAlert(err.message));
   }
   
   private renderGenreRow() {
@@ -46,12 +56,13 @@ class Genre extends React.Component<any, { genres: GenreList[] }> {
   public render() {
     return (
       <div className="section">
-        <Container>
+        <Snackbar open={this.state.open} message={this.state.alertMsg} onClose={this.handleClose}/>
+        <Container className="container">
           <h5 className="heading">Genres</h5>
           <Grid container spacing={3}>
             {this.renderGenreRow()}
+            <Grid item lg={12} xs={12} sm={12} md={12} className="view-more"><span>View More</span></Grid>
           </Grid>
-          <div className="view-more"><span>View More</span></div>
         </Container>
       </div>
     );
