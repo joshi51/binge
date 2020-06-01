@@ -1,9 +1,11 @@
 import express from 'express';
 import React from 'react';
 import { renderToString } from 'react-dom/server';
+import { Provider } from 'react-redux';
 import { StaticRouter } from 'react-router-dom';
 
 import App from './App';
+import store from './shared/store/store';
 
 let assets: any;
 
@@ -18,9 +20,11 @@ const server = express()
   .get('/*', (req: express.Request, res: express.Response) => {
     const context = {};
     const markup = renderToString(
-      <StaticRouter context={context} location={req.url}>
-        <App />
-      </StaticRouter>
+      <Provider store={store}>
+        <StaticRouter context={context} location={req.url}>
+          <App />
+        </StaticRouter>
+      </Provider>
     );
     res.send(
       `<!doctype html>
