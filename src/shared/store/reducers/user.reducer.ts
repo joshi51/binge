@@ -1,8 +1,6 @@
 import { USER_LOGIN } from '../actions';
 
-const initialState = {
-  user: {}
-};
+const initialState = {};
 
 export default function(state: any = initialState, action: any) {
   switch (action.type) {
@@ -10,7 +8,7 @@ export default function(state: any = initialState, action: any) {
       const userData = action.payload;
       return {
         ...state,
-        user: userData
+        userData
       };
     }
     default:

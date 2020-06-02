@@ -5,8 +5,12 @@ import { connect } from 'react-redux';
 import Genre from '../Genre/Genre';
 import './Home.scss';
 import { Banner } from './interfaces';
-import { config } from '../shared/functions';
 import { userLogin } from '../shared/store/actions';
+
+const mapStateToProps = (state: any) => {
+  console.log(state);
+  return state;
+};
 
 class Home extends React.Component<{userLogin?: any}, {}> {
   private bannerImages: Banner[] = [
@@ -27,16 +31,13 @@ class Home extends React.Component<{userLogin?: any}, {}> {
   
   constructor(props: any) {
     super(props);
-    this.handleUserLogin = this.handleUserLogin.bind(this);
   }
   
-  private handleUserLogin() {
-    this.props.userLogin({user: '2'});
+  public componentDidMount() {
+    this.props.userLogin({id: '2'});
   }
   
   private renderItems = () => {
-    config();
-    this.handleUserLogin();
     return _.map(this.bannerImages, (banner: Banner, index: number) => {
       return (
         <Carousel.Item key={index}>
@@ -66,4 +67,4 @@ class Home extends React.Component<{userLogin?: any}, {}> {
   }
 }
 
-export default connect(null, {userLogin})(Home);
+export default connect(mapStateToProps, {userLogin})(Home);
