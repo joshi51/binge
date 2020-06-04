@@ -1,1 +1,1 @@
-export * from './baseRoutes';
+export * from './userTypes';

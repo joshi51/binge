@@ -1,54 +1,36 @@
 import React from 'react';
-import Nav from 'react-bootstrap/Nav';
-import Navbar from 'react-bootstrap/Navbar';
-import { BaseRoutes } from './enums';
+import { AppBar, IconButton, Typography, Button, Toolbar, Link, withStyles } from '@material-ui/core';
+import MenuIcon from '@material-ui/icons/Menu';
+import {globalCss} from '../shared/material-ui-global';
+import './BingeNav.scss';
+
+const styles = (theme: any) => ({
+  whiteLink: globalCss.whiteLink
+});
 
 class BingeNav extends React.Component<any, { type: number }> {
-  constructor(props: { type: number }) {
+  constructor(props: any) {
     super(props);
   }
   
   public render() {
-    switch (this.props.type) {
-      case BaseRoutes.AUTH:
-        return (
-          <Navbar bg="dark" variant="dark" expand="lg">
-            <Navbar.Brand href="/">Let's Binge</Navbar.Brand>
-            <Navbar.Toggle aria-controls="basic-navbar-nav"/>
-            <Navbar.Collapse id="basic-navbar-nav">
-              <Nav className="mr-auto"/>
-              <Nav className="mr-0">
-                <Nav.Link href="/auth/login">Login</Nav.Link>
-                <Nav.Link href="/auth/signup">Sign Up</Nav.Link>
-              </Nav>
-            </Navbar.Collapse>
-          </Navbar>
-        );
-      case BaseRoutes.ADMIN:
-        return (
-          <Navbar bg="dark" variant="dark" expand="lg">
-            <Navbar.Brand href="/">Let's Binge</Navbar.Brand>
-          </Navbar>
-        );
-      case BaseRoutes.DEFAULT:
-      default:
-        return (
-          <Navbar bg="dark" variant="dark" expand="lg">
-            <Navbar.Brand href="/">Let's Binge</Navbar.Brand>
-            <Navbar.Toggle aria-controls="basic-navbar-nav"/>
-            <Navbar.Collapse id="basic-navbar-nav">
-              <Nav className="mr-auto">
-                <Nav.Link href="/admin">Dasboard</Nav.Link>
-              </Nav>
-              <Nav className="mr-0">
-                <Nav.Link href="/auth/login">Login</Nav.Link>
-                <Nav.Link href="/auth/signup">Sign Up</Nav.Link>
-              </Nav>
-            </Navbar.Collapse>
-          </Navbar>
-        );
-    }
+    const { classes }: any = this.props;
+    return (
+      <AppBar position="static">
+        <Toolbar>
+          <IconButton edge="start" color="inherit" aria-label="menu">
+            <MenuIcon />
+          </IconButton>
+          <Typography className="header-left" variant="h6">
+            <Link className={classes.whiteLink} href="/">Binge</Link>
+          </Typography>
+          <Button className={classes.whiteLink} href="/admin" color="inherit">Dashboard</Button>
+          <Button className={classes.whiteLink} href="/auth/login" color="inherit">Login</Button>
+          <Button className={classes.whiteLink} href="/auth/signup" color="inherit">Register</Button>
+        </Toolbar>
+      </AppBar>
+    );
   }
 }
 
-export default BingeNav;
+export default withStyles(styles)(BingeNav);
