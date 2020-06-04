@@ -5,14 +5,13 @@ import { connect } from 'react-redux';
 import Genre from '../Genre/Genre';
 import './Home.scss';
 import { Banner } from './interfaces';
-import { userLogin } from '../shared/store/actions';
 
 const mapStateToProps = (state: any) => {
   console.log(state);
   return state;
 };
 
-class Home extends React.Component<{userLogin?: any}, {}> {
+class Home extends React.Component<{ userLogin?: any }, {}> {
   private bannerImages: Banner[] = [
     {
       image: `https://res.cloudinary.com/dayo7ui1r/image/upload/w_1440,h_500,c_crop/v1565430748/Binge/blade-runner-2049.jpg`,
@@ -31,10 +30,6 @@ class Home extends React.Component<{userLogin?: any}, {}> {
   
   constructor(props: any) {
     super(props);
-  }
-  
-  public componentDidMount() {
-    this.props.userLogin({id: '2'});
   }
   
   private renderItems = () => {
@@ -67,4 +62,4 @@ class Home extends React.Component<{userLogin?: any}, {}> {
   }
 }
 
-export default connect(mapStateToProps, {userLogin})(Home);
+export default connect(mapStateToProps, null)(Home);
