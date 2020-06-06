@@ -7,7 +7,7 @@ import './Home.scss';
 import { Banner } from './interfaces';
 
 const mapStateToProps = (state: any) => {
-  console.log(state);
+  // console.log(state);
   return state;
 };
 
