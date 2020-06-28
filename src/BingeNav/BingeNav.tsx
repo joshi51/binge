@@ -8,7 +8,10 @@ import { get, isEmpty, isEqual } from 'lodash';
 import {userLogin} from '../shared/store/actions';
 
 const styles = (theme: any) => ({
-  whiteLink: globalCss.whiteLink
+  whiteLink: globalCss.whiteLink,
+  headerBar: {
+    backgroundColor: '#242530'
+  }
 });
 
 const mapStateToProps = (state: any) => {
@@ -66,7 +69,7 @@ class BingeNav extends React.Component<any, { user: any }> {
   public render() {
     const {classes}: any = this.props;
     return (
-      <AppBar position="static">
+      <AppBar position="static" className={classes.headerBar}>
         <Toolbar>
           <IconButton edge="start" color="inherit" aria-label="menu">
             <MenuIcon/>

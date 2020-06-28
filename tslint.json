@@ -49,8 +49,7 @@
       true,
       "check-catch",
       "check-else",
-      "check-open-brace",
-      "check-whitespace"
+      "check-open-brace"
     ],
     "quotemark": [false, "single", "jsx-double", "avoid-escape"],
     "radix": true,
