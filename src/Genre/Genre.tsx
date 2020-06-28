@@ -5,6 +5,7 @@ import { config } from '../shared/functions';
 import { GenreList } from './interfaces';
 import { Grid, Container, withStyles, Snackbar } from '@material-ui/core';
 import axios from 'axios';
+import {Redirect} from 'react-router-dom';
 
 const styles = (theme: any) => ({
   genreGrid: {
@@ -12,7 +13,7 @@ const styles = (theme: any) => ({
   }
 });
 
-class Genre extends React.Component<any, { genres: GenreList[], open: boolean, alertMsg: string }> {
+class Genre extends React.Component<any, { genres: GenreList[], open: boolean, alertMsg: string, redirectPath: string }> {
   private config = config();
   
   constructor(props: any) {
@@ -20,7 +21,8 @@ class Genre extends React.Component<any, { genres: GenreList[], open: boolean, a
     this.state = {
       genres: [],
       open: false,
-      alertMsg: ''
+      alertMsg: '',
+      redirectPath: ''
     };
     this.handleClose = this.handleClose.bind(this);
     this.getFeaturedGenres();
@@ -43,29 +45,38 @@ class Genre extends React.Component<any, { genres: GenreList[], open: boolean, a
       .catch((err) => this.showAlert(err.message));
   }
   
+  private navigateGenrePage(genreId: number) {
+    this.setState({redirectPath: `/genres/${genreId}`});
+  }
+  
   private renderGenreRow() {
     const { classes }: any = this.props;
     return map(this.state.genres, (genre, key) => {
       return (<Grid item lg={4} md={4} sm={12} xs={12} key={key} className={`${classes.genreGrid} genre-grid`}>
-        <div className="image"><img src={genre.image} alt={genre.name}/></div>
+        <div onClick={() => this.navigateGenrePage(genre.id)} className="image"><img src={genre.image} alt={genre.name}/></div>
         <div className="title"><span>{genre.name}</span></div>
       </Grid>);
     });
   }
   
   public render() {
-    return (
-      <div className="section">
-        <Snackbar open={this.state.open} message={this.state.alertMsg} onClose={this.handleClose}/>
-        <Container className="container">
-          <h5 className="heading">Genres</h5>
-          <Grid container spacing={3}>
-            {this.renderGenreRow()}
-            <Grid item lg={12} xs={12} sm={12} md={12} className="view-more"><span>View More</span></Grid>
-          </Grid>
-        </Container>
-      </div>
-    );
+    if (this.state.redirectPath) {
+      return <Redirect to={this.state.redirectPath}/>;
+    } else {
+      return (
+        <div className="section">
+          <Snackbar open={this.state.open} message={this.state.alertMsg} onClose={this.handleClose}/>
+          <Container className="container">
+            <h5 className="heading">Genres</h5>
+            <Grid container spacing={3}>
+              {this.renderGenreRow()}
+              <Grid item lg={12} xs={12} sm={12} md={12} className="view-more"><span>View More</span></Grid>
+            </Grid>
+          </Container>
+        </div>
+      );
+    }
+    
   }
 }
 

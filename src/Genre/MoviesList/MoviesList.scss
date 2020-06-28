@@ -1,0 +1,44 @@
+.grid-container {
+  margin: 1em;
+  border-radius: 8px;
+  border: 1px solid #b3afaf69;
+  cursor: pointer;
+
+  &:hover {
+    box-shadow: 0 0 15px rgba(0, 0, 0, .2);
+    transition: opacity .2s ease-out;
+    background-color: #f8f8f8;
+  }
+
+  .image {
+    height: 12em;
+  }
+
+  .details {
+    margin: 10px;
+
+    h3 {
+      margin-top: 1em;
+      margin-bottom: 1em;
+    }
+
+    .description {
+      color: #02020294;
+      margin-bottom: 1em;
+      display: flex;
+    }
+
+    .footer {
+      display: flex;
+      justify-content: space-between;
+
+      .rating {
+
+      }
+
+      .options {
+
+      }
+    }
+  }
+}
