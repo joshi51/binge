@@ -8,8 +8,17 @@ import axios from 'axios';
 import { get } from 'lodash';
 import { config } from '../../shared/functions';
 import { Movies } from '../../shared/interfaces';
+import { Redirect } from 'react-router-dom';
+import { MoviesService } from '../../shared/services';
 
-class MoviesList extends React.Component<any, {open: boolean, alertMsg: string, movieList: Movies[]}> {
+const movieServices = new MoviesService();
+
+class MoviesList extends React.Component<any,
+  { open: boolean,
+    alertMsg: string,
+    movieList: Movies[],
+    redirectPath: string,
+    selectedMovie: any }> {
   private config = config();
   
   constructor(props: any) {
@@ -17,16 +26,19 @@ class MoviesList extends React.Component<any, {open: boolean, alertMsg: string, 
     this.state = {
       open: false,
       alertMsg: '',
-      movieList: []
+      movieList: [],
+      redirectPath: '',
+      selectedMovie: {}
     };
     this.handleClose = this.handleClose.bind(this);
+    this.handleClick = this.handleClick.bind(this);
     this.getMovieList();
   }
   
   private async getMovieList() {
     const genreId = get(this.props, 'match.params.genreId');
     if (genreId) {
-      axios.get(`${this.config.serverEndpoint}/movie/genre/${genreId}`)
+      movieServices.getMoviesByGenre(genreId)
         .then((response: any) => {
           this.setState({...this.state, movieList: response.data});
         })
@@ -52,9 +64,13 @@ class MoviesList extends React.Component<any, {open: boolean, alertMsg: string, 
     return overviewString;
   }
   
+  private handleClick(movie: Movies) {
+    this.setState({...this.state, selectedMovie: movie, redirectPath: `/movie/${movie.id}`});
+  }
+  
   private renderGrid() {
     return this.state.movieList.map((movie: Movies, index) => <Grid key={index} item lg={4} md={4} sm={12} xs={12}>
-      <div className="grid-container">
+      <div className="grid-container" onClick={() => this.handleClick(movie)}>
         <div className="image" style={{background: `url("${this.config.tmdbImageEndpoint}/${movie.image ? movie.image : movie.poster}") center center / cover`}}/>
         <div className="details">
           <h3>{movie.title}</h3>
@@ -71,14 +87,18 @@ class MoviesList extends React.Component<any, {open: boolean, alertMsg: string, 
   }
   
   public render() {
-    return <React.Fragment>
-      <Snackbar open={this.state.open} message={this.state.alertMsg} onClose={this.handleClose}/>
-      <Container>
-        <Grid container spacing={3}>
-          {this.state.movieList.length > 0 ? this.renderGrid() : ''}
-        </Grid>
-      </Container>
-    </React.Fragment>;
+    if (this.state.redirectPath) {
+      return <Redirect to={{pathname: this.state.redirectPath, state: {movie: this.state.selectedMovie}}}/>;
+    } else {
+      return <React.Fragment>
+        <Snackbar open={this.state.open} message={this.state.alertMsg} onClose={this.handleClose}/>
+        <Container>
+          <Grid container spacing={3}>
+            {this.state.movieList.length > 0 ? this.renderGrid() : ''}
+          </Grid>
+        </Container>
+      </React.Fragment>;
+    }
   }
 }
 
