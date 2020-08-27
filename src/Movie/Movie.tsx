@@ -43,28 +43,27 @@ class Movie extends React.Component<any, {movie?: Movies}> {
   public render() {
     const {classes}: any = this.props;
     if (this.state.movie) {
-      console.log(this.state.movie);
       return <React.Fragment>
         <div className="banner" style={{background: `url("${this.config.tmdbImageEndpoint1280}${this.state.movie.image}") center center / cover`}}/>
         <Container className={classes.posterContainer}>
           <Grid container spacing={3}>
-            <Grid lg={3} md={3} sm={12} xs={12}>
+            <Grid item lg={3} md={3} sm={12} xs={12}>
               <img className="poster" src={`${this.config.tmdbImageEndpoint1280}${this.state.movie.poster}`} alt=""/>
             </Grid>
   
-            <Grid lg={9} md={9} sm={12} xs={12}>
+            <Grid item lg={9} md={9} sm={12} xs={12}>
               <div className="poster-details">
                 <span className="movie-title">{this.state.movie.title}</span>
                 <span className="release-date">{this.state.movie.releaseDate}</span>
                 <Grid container >
-                  <Grid lg={3} md={3} sm={5} xs={5}>
+                  <Grid item lg={3} md={3} sm={5} xs={5}>
                     <p>Original Language</p>
                     <p>Original Title</p>
                     <p>Popularity</p>
                     <p>Vote Average</p>
                     <p>Vote Count</p>
                   </Grid>
-                  <Grid lg={9} md={9} sm={7} xs={7}>
+                  <Grid item lg={9} md={9} sm={7} xs={7}>
                     <p>{this.state.movie.originalLanguage}</p>
                     <p>{this.state.movie.originalTitle}</p>
                     <p>{this.state.movie.popularity}</p>

@@ -87,6 +87,7 @@
     ],
     "ordered-imports": false,
     "jsx-boolean-value": false,
-    "object-literal-sort-keys": false
+    "object-literal-sort-keys": false,
+    "object-literal-key-quotes": false
   }
 }
