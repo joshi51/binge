@@ -6,6 +6,7 @@ import Footer from './Footer/Footer';
 import MoviesList from './Genre/MoviesList/MoviesList';
 import Home from './Home/Home';
 import Login from './Login/Login';
+import Movie from './Movie/Movie';
 import Signup from './Signup/Signup';
 import '../scss/custom.scss';
 
@@ -18,6 +19,7 @@ const App = () => (
       <Route exact={true} path="/" component={Home}/>
       <Route exact={true} path="/admin" component={Dashboard}/>
       <Route exact={true} path="/genres/:genreId" component={MoviesList}/>
+      <Route exact={true} path="/movie/:movieId" component={Movie}/>
     </Switch>
     <Footer/>
   </React.Fragment>
