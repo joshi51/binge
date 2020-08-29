@@ -22,7 +22,7 @@
     "jsx-wrap-multiline": false,
     "jsx-alignment": false,
     "label-position": true,
-    "max-line-length": [true, 140],
+    "max-line-length": [true, 200],
     "member-ordering": [
       true,
       "private-before-public",

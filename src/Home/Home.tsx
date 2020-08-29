@@ -1,61 +1,74 @@
 import * as _ from 'lodash';
 import React from 'react';
-import Carousel from 'react-bootstrap/Carousel';
 import { connect } from 'react-redux';
 import Genre from '../Genre/Genre';
 import './Home.scss';
-import { Banner } from './interfaces';
+import SwipeableViews from 'react-swipeable-views';
+import { autoPlay } from 'react-swipeable-views-utils';
+import {MoviesService} from '../shared/services';
+import {Movies} from '../shared/interfaces';
+const movieService = new MoviesService();
+import {config} from '../shared/functions';
+const env = config();
 
+const bannerMovieIds = [299536, 664767, 447332, 27205];
+
+const AutoPlaySwipeableViews = autoPlay(SwipeableViews);
 const mapStateToProps = (state: any) => {
-  // console.log(state);
   return state;
 };
 
-class Home extends React.Component<{ userLogin?: any }, {}> {
-  private bannerImages: Banner[] = [
-    {
-      image: `https://res.cloudinary.com/dayo7ui1r/image/upload/w_1440,h_500,c_crop/v1565430748/Binge/blade-runner-2049.jpg`,
-      subtitle: 'Blade Runner',
-      title: '',
-    }, {
-      image: `https://res.cloudinary.com/dayo7ui1r/image/upload/w_1440,h_500,c_crop/v1565432199/Binge/arrival_d545_1440x900.jpg`,
-      subtitle: 'Arrival',
-      title: '',
-    }, {
-      image: `https://res.cloudinary.com/dayo7ui1r/image/upload/w_1440,h_500,c_crop/v1565431443/Binge/leon-the-professional.jpg`,
-      subtitle: 'Léon: The Professional',
-      title: '',
-    },
-  ];
-  
+class Home extends React.Component<{ userLogin?: any }, {activeStep: number, bannerMovies: Movies[]}> {
   constructor(props: any) {
     super(props);
+    this.state = {
+      activeStep: 0,
+      bannerMovies: []
+    };
+    
+    this.handleStepChange = this.handleStepChange.bind(this);
+  }
+  
+  public componentDidMount() {
+    movieService.getMovies(bannerMovieIds)
+      .then((response: any) => this.setState({...this.state, bannerMovies: response.data}))
+      .catch((err: any) => console.log(err));
+  }
+  
+  private renderBannerImage(banner: Movies) {
+    return <div style={{background: `url("${env.tmdbImageEndpoint1280}/${banner.image}") center center / cover`, height: '500px'}}>
+      {banner.title}
+    </div>;
   }
   
   private renderItems = () => {
-    return _.map(this.bannerImages, (banner: Banner, index: number) => {
+    return _.map(this.state.bannerMovies, (banner: Movies, index: number) => {
       return (
-        <Carousel.Item key={index}>
-          <img
-            className="d-block w-100"
-            src={banner.image}
-            alt={banner.title}
-          />
-          <Carousel.Caption>
-            <h3>{banner.title}</h3>
-            <p>{banner.subtitle}</p>
-          </Carousel.Caption>
-        </Carousel.Item>
+        <div key={index}>
+          {Math.abs(this.state.activeStep - index) <= 2 ? (this.renderBannerImage(banner)) : null}
+        </div>
       );
     });
+  }
+  
+  private handleStepChange() {
+    let newStep = 0;
+    if (this.state.activeStep !== this.state.bannerMovies.length - 1) {
+      newStep = this.state.activeStep + 1;
+    }
+    this.setState({...this.state, activeStep: newStep});
   }
   
   public render() {
     return (
       <React.Fragment>
-        <Carousel>
+        <AutoPlaySwipeableViews
+          index={this.state.activeStep}
+          onChangeIndex={this.handleStepChange}
+          enableMouseEvents
+        >
           {this.renderItems()}
-        </Carousel>
+        </AutoPlaySwipeableViews>
         <Genre/>
       </React.Fragment>
     );

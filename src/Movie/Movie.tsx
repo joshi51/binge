@@ -67,6 +67,7 @@ class Movie extends React.Component<any, {movie?: Movies}> {
                     <p>{this.state.movie.originalLanguage}</p>
                     <p>{this.state.movie.originalTitle}</p>
                     <p>{this.state.movie.popularity}</p>
+                    <p>{this.state.movie.voteAverage}</p>
                     <p>{this.state.movie.voteCount}</p>
                   </Grid>
                 </Grid>

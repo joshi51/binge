@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button, Container, Form } from 'react-bootstrap';
+import { Button, Container, FormControl, InputLabel, Input } from '@material-ui/core';
 import { connect } from 'react-redux';
 import { UserService } from '../shared/services';
 import { userLogin } from '../shared/store/actions';
@@ -51,18 +51,16 @@ class Login extends React.Component<{ userLogin: any }, { username: string, pass
     return (
       <Container>
         <h5>Login Form</h5>
-        <Form>
-          <Form.Group controlId="loginUsername">
-            <Form.Label>Username</Form.Label>
-            <Form.Control type="text" placeholder="Enter Username" value={this.state.username} onChange={this.handleChange}/>
-          </Form.Group>
+          <FormControl fullWidth>
+            <InputLabel>Username</InputLabel>
+            <Input type="text" id="loginUsername" placeholder="Enter Username" value={this.state.username} onChange={this.handleChange}/>
+          </FormControl>
           
-          <Form.Group controlId="loginPassword">
-            <Form.Label>Password</Form.Label>
-            <Form.Control type="password" value={this.state.password} onChange={this.handleChange} placeholder="Password"/>
-          </Form.Group>
-          <Button variant="primary" type="submit" onClick={this.handleSubmit}>Submit</Button>
-        </Form>
+          <FormControl fullWidth>
+            <InputLabel>Password</InputLabel>
+            <Input type="password" id="loginPassword" value={this.state.password} onChange={this.handleChange} placeholder="Password"/>
+          </FormControl>
+          <Button variant="contained" color="primary" type="submit" onClick={this.handleSubmit}>Submit</Button>
       </Container>
     );
   }

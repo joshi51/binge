@@ -35,7 +35,7 @@ class Dashboard extends React.Component<any, { keyword: string, apiData: any, ap
     if (!this.state.keyword) {
       return;
     }
-    let apiUrl = `${this.config.serverEndpoint}/admin/search/${this.state.keyword}`;
+    let apiUrl = `${this.config.serverEndpoint}/search/${this.state.keyword}`;
     if (this.state.apiCallCheckbox) {
       apiUrl += `?fromapi=${this.state.apiCallCheckbox}`;
     }
