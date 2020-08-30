@@ -10,4 +10,8 @@ export class MoviesService {
   public getMoviesByGenre(genreId: string) {
     return axios.get(`${env.serverEndpoint}/movie/genre/${genreId}`);
   }
+  
+  public getMovies(movieIds: number[]) {
+    return axios.post(`${env.serverEndpoint}/movies`, {movieIds});
+  }
 }

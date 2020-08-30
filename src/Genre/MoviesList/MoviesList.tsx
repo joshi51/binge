@@ -4,7 +4,6 @@ import Grid from '@material-ui/core/Grid';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCheck } from '@fortawesome/free-solid-svg-icons';
 import './MoviesList.scss';
-import axios from 'axios';
 import { get } from 'lodash';
 import { config } from '../../shared/functions';
 import { Movies } from '../../shared/interfaces';

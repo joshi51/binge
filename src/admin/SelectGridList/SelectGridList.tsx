@@ -1,6 +1,6 @@
 import {map, isEqual} from 'lodash';
 import React from 'react';
-import { Container, Media } from 'react-bootstrap';
+import {Container} from '@material-ui/core';
 import { config } from '../../shared/functions';
 import './SelectGridList.scss';
 import { Movies } from '../../shared/interfaces';
@@ -31,13 +31,13 @@ class SelectGridList extends React.Component<{ apiData: any }, { movies: any }> 
     const tmdbImageUsl = this.config.tmdbImageEndpoint;
     return map(this.state.movies, (movie: Movies, key) => {
       return (
-        <Media className="selectable" onClick={() => this.handleClick(movie)} key={key}>
+        <div className="selectable" onClick={() => this.handleClick(movie)} key={key}>
           <img className="poster" src={`${tmdbImageUsl}${movie.poster ? movie.poster : movie.image}`} alt="Generic placeholder"/>
-          <Media.Body>
+          <div>
             <h5>{movie.title}</h5>
             <p>{movie.overview}</p>
-          </Media.Body>
-        </Media>
+          </div>
+        </div>
       );
     });
   }
