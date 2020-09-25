@@ -5,6 +5,7 @@ export interface Config {
 
 export interface ConfigValues {
   serverEndpoint: string;
+  pythonServerEndpoint: string;
   tmdbImageEndpoint: string;
   tmdbImageEndpoint780?: string;
   tmdbImageEndpoint1280?: string;
