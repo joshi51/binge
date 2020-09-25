@@ -14,4 +14,12 @@ export class MoviesService {
   public getMovies(movieIds: number[]) {
     return axios.post(`${env.serverEndpoint}/movies`, {movieIds});
   }
+  
+  public getMoviesByTitle(movieTitles: string[]) {
+    return axios.post(`${env.serverEndpoint}/movies-by-title`, {movieTitles});
+  }
+  
+  public getMovieRecommendations(title: string) {
+    return axios.post(`${env.pythonServerEndpoint}/search`, {name: title});
+  }
 }

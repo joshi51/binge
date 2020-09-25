@@ -87,7 +87,7 @@ class MoviesList extends React.Component<any,
   
   public render() {
     if (this.state.redirectPath) {
-      return <Redirect to={{pathname: this.state.redirectPath, state: {movie: this.state.selectedMovie}}}/>;
+      return <Redirect to={{pathname: this.state.redirectPath, state: {movie: this.state.selectedMovie}}} push/>;
     } else {
       return <React.Fragment>
         <Snackbar open={this.state.open} message={this.state.alertMsg} onClose={this.handleClose}/>

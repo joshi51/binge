@@ -61,7 +61,7 @@ class Genre extends React.Component<any, { genres: GenreList[], open: boolean, a
   
   public render() {
     if (this.state.redirectPath) {
-      return <Redirect to={this.state.redirectPath}/>;
+      return <Redirect to={this.state.redirectPath} push/>;
     } else {
       return (
         <div className="section">

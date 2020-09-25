@@ -3,7 +3,7 @@ import React from 'react';
 import { config } from '../../shared/functions';
 import SelectGridList from '../SelectGridList/SelectGridList';
 import './Dashboard.scss';
-import { TextField, Container, Button, FormControl, Checkbox, FormControlLabel } from '@material-ui/core';
+import { Input, Container, Button, FormControl, Checkbox, FormControlLabel, InputLabel } from '@material-ui/core';
 
 class Dashboard extends React.Component<any, { keyword: string, apiData: any, apiCallCheckbox: any }> {
   private config = config();
@@ -52,7 +52,8 @@ class Dashboard extends React.Component<any, { keyword: string, apiData: any, ap
     return (
       <Container className="margin-top-2">
         <FormControl fullWidth={true}>
-          <TextField id="keyword" label="Search movie" variant="outlined" value={this.state.keyword} onChange={this.handleChange}/>
+          <InputLabel>Username</InputLabel>
+          <Input id="keyword" value={this.state.keyword} onChange={this.handleChange}/>
         </FormControl>
         <FormControl fullWidth={true}>
           <FormControlLabel label="Use API"

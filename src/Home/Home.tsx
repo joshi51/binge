@@ -52,10 +52,8 @@ class Home extends React.Component<{ userLogin?: any }, {activeStep: number, ban
   }
   
   private handleStepChange() {
-    let newStep = 0;
-    if (this.state.activeStep !== this.state.bannerMovies.length - 1) {
-      newStep = this.state.activeStep + 1;
-    }
+    let newStep;
+    newStep = this.state.bannerMovies.length > 0 && this.state.activeStep !== this.state.bannerMovies.length - 1 ? this.state.activeStep + 1 : 0;
     this.setState({...this.state, activeStep: newStep});
   }
   
