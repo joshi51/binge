@@ -1,4 +1,4 @@
-import { Container, Snackbar } from '@material-ui/core';
+import { Container, Snackbar, TablePagination } from '@material-ui/core';
 import React from 'react';
 import Grid from '@material-ui/core/Grid';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -13,11 +13,14 @@ import { MoviesService } from '../../shared/services';
 const movieServices = new MoviesService();
 
 class MoviesList extends React.Component<any,
-  { open: boolean,
+  {
+    open: boolean,
     alertMsg: string,
     movieList: Movies[],
     redirectPath: string,
-    selectedMovie: any }> {
+    selectedMovie: any,
+    pageNumber: number,
+  }> {
   private config = config();
   
   constructor(props: any) {
@@ -27,19 +30,31 @@ class MoviesList extends React.Component<any,
       alertMsg: '',
       movieList: [],
       redirectPath: '',
-      selectedMovie: {}
+      selectedMovie: {},
+      pageNumber: 1,
     };
     this.handleClose = this.handleClose.bind(this);
     this.handleClick = this.handleClick.bind(this);
+    this.trackScrolling = this.trackScrolling.bind(this);
     this.getMovieList();
   }
   
-  private async getMovieList() {
+  public componentDidMount() {
+    document.addEventListener('scroll', this.trackScrolling);
+  }
+  
+  public componentWillUnmount() {
+    document.removeEventListener('scroll', this.trackScrolling);
+  }
+  
+  private getMovieList() {
     const genreId = get(this.props, 'match.params.genreId');
     if (genreId) {
-      movieServices.getMoviesByGenre(genreId)
+      movieServices.getMoviesByGenre(genreId, this.state.pageNumber)
         .then((response: any) => {
-          this.setState({...this.state, movieList: response.data});
+          this.setState({...this.state, movieList: [...this.state.movieList, ...response.data]}, () => {
+            document.addEventListener('scroll', this.trackScrolling);
+          });
         })
         .catch((err) => this.showAlert(err.message));
     }
@@ -85,13 +100,24 @@ class MoviesList extends React.Component<any,
     </Grid>);
   }
   
+  private async trackScrolling() {
+    const wrappedElement: any = document.getElementById('movie-list-container');
+    const reachedBottom = wrappedElement.getBoundingClientRect().bottom <= window.innerHeight;
+    if (reachedBottom) {
+      document.removeEventListener('scroll', this.trackScrolling);
+      this.setState({...this.state, pageNumber: this.state.pageNumber + 1}, () => {
+        this.getMovieList();
+      });
+    }
+  }
+  
   public render() {
     if (this.state.redirectPath) {
       return <Redirect to={{pathname: this.state.redirectPath, state: {movie: this.state.selectedMovie}}} push/>;
     } else {
       return <React.Fragment>
         <Snackbar open={this.state.open} message={this.state.alertMsg} onClose={this.handleClose}/>
-        <Container>
+        <Container id="movie-list-container">
           <Grid container spacing={3}>
             {this.state.movieList.length > 0 ? this.renderGrid() : ''}
           </Grid>
