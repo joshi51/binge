@@ -7,8 +7,12 @@ export class MoviesService {
     return axios.get(`${env.serverEndpoint}/movie/${id}`);
   }
   
-  public getMoviesByGenre(genreId: string) {
-    return axios.get(`${env.serverEndpoint}/movie/genre/${genreId}`);
+  public getMoviesByGenre(genreId: string, pageNumber?: number) {
+    let apiString = `${env.serverEndpoint}/movie/genre/${genreId}`;
+    if (pageNumber && pageNumber > 0) {
+      apiString += `?page=${pageNumber}`;
+    }
+    return axios.get(apiString);
   }
   
   public getMovies(movieIds: number[]) {
