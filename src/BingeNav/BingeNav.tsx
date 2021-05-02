@@ -63,7 +63,7 @@ class BingeNav extends React.Component<any, { user: any }> {
     if (get(this.state, 'user.firstname')) {
       return (
         <React.Fragment>
-          <Typography variant="h6">Hi {this.state.user.firstname}</Typography>
+          <p className='header-text'>Hi {this.state.user.firstname.toUpperCase()}</p>
           <Button className={classes.whiteLink} href="/admin" color="inherit">Dashboard</Button>
         </React.Fragment>
       );

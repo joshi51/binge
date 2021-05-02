@@ -9,6 +9,7 @@ import {MoviesService} from '../shared/services';
 import {Movies} from '../shared/interfaces';
 const movieService = new MoviesService();
 import {config} from '../shared/functions';
+import moment from 'moment';
 const env = config();
 
 const bannerMovieIds = [299536, 664767, 447332, 27205];
@@ -36,16 +37,16 @@ class Home extends React.Component<{ userLogin?: any }, {activeStep: number, ban
   }
   
   private renderBannerImage(banner: Movies) {
-    return <div style={{background: `url("${env.tmdbImageEndpoint1280}/${banner.image}") center center / cover`, height: '500px'}}>
-      {banner.title}
-    </div>;
+    return <div style={{background: `url("${env.tmdbImageEndpoint1280}/${banner.image}") center center / cover`, height: '500px'}}/>;
   }
   
   private renderItems = () => {
     return _.map(this.state.bannerMovies, (banner: Movies, index: number) => {
+      const movieYear = moment(banner.releaseDate).year();
       return (
-        <div key={index}>
+        <div key={index} className='image-container'>
           {Math.abs(this.state.activeStep - index) <= 2 ? (this.renderBannerImage(banner)) : null}
+          <div className='title'>{banner.title} {movieYear ? `(${movieYear})` : ''}</div>
         </div>
       );
     });
