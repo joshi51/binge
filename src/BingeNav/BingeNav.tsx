@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import { globalCss } from '../shared/material-ui-global';
 import './BingeNav.scss';
 import { get, isEmpty, isEqual } from 'lodash';
-import {userLogin} from '../shared/store/actions';
+import { userLogin } from '../shared/store/actions';
 
 const styles = (theme: any) => ({
   whiteLink: globalCss.whiteLink,
@@ -18,6 +18,12 @@ const mapStateToProps = (state: any) => {
   return state;
 };
 
+const mapDispatchToProps = (dispatch: any) => {
+  return {
+    userLogin: (payload: any) => dispatch(userLogin(payload))
+  };
+};
+
 class BingeNav extends React.Component<any, { user: any }> {
   constructor(props: any) {
     super(props);
@@ -26,32 +32,38 @@ class BingeNav extends React.Component<any, { user: any }> {
     };
     this.renderHeaderItems = this.renderHeaderItems.bind(this);
   }
-  
+
   public componentDidMount() {
     if (!isEmpty(this.props.user)) {
-      this.setState({...this.state, user: get(this.props, 'user.userData.token.user')});
+      this.setState({ ...this.state, user: this.props.user.userData });
     } else {
-      const sessionData = localStorage.getItem('auth');
+      const sessionData = sessionStorage.getItem('auth');
       if (sessionData) {
         const sessionJson = JSON.parse(sessionData);
-        this.setState({...this.state, user: get(sessionJson, 'token.user')});
+        this.setState({ ...this.state, user: sessionJson });
         this.props.userLogin(sessionJson);
       }
     }
   }
-  
+
   public componentDidUpdate(prevProps: Readonly<any>, prevState: Readonly<{ user: any }>, snapshot?: any) {
     if (!isEqual(this.props, prevProps) && !isEmpty(this.props.user)) {
-      this.setState({...this.state, user: get(this.props, 'user.userData.token.user')});
+      this.setState({ ...this.state, user: this.props.user.userData });
     }
   }
-  
+
+  public componentWillUnmount() {
+    this.setState = (state,callback)=>{
+      return;
+    };
+  }
+
   private renderHeaderItems() {
-    const {classes}: any = this.props;
+    const { classes }: any = this.props;
     if (get(this.state, 'user.firstname')) {
       return (
         <React.Fragment>
-          <Typography  variant="h6">Hi {this.state.user.firstname}</Typography>
+          <p className='header-text'>Hi {this.state.user.firstname.toUpperCase()}</p>
           <Button className={classes.whiteLink} href="/admin" color="inherit">Dashboard</Button>
         </React.Fragment>
       );
@@ -65,14 +77,14 @@ class BingeNav extends React.Component<any, { user: any }> {
       );
     }
   }
-  
+
   public render() {
-    const {classes}: any = this.props;
+    const { classes }: any = this.props;
     return (
       <AppBar position="static" className={classes.headerBar}>
         <Toolbar>
           <IconButton edge="start" color="inherit" aria-label="menu">
-            <MenuIcon/>
+            <MenuIcon />
           </IconButton>
           <Typography className="header-left" variant="h6">
             <Link className={classes.whiteLink} href="/">Binge</Link>
@@ -84,4 +96,4 @@ class BingeNav extends React.Component<any, { user: any }> {
   }
 }
 
-export default connect(mapStateToProps,{userLogin})(withStyles(styles)(BingeNav));
+export default connect(mapStateToProps, mapDispatchToProps)(withStyles(styles)(BingeNav));
