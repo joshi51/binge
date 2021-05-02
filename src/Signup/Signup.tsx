@@ -8,7 +8,6 @@ const mapStateToProps = (state: any) => {
   return state;
 };
 
-
 class Signup extends React.Component<{}, { email: string, password: string, redirectPath: string }> {
   constructor(props: any) {
     super(props);
