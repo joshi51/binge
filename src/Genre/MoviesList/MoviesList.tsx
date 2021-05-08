@@ -8,9 +8,7 @@ import { get } from 'lodash';
 import { config } from '../../shared/functions';
 import { Movies } from '../../shared/interfaces';
 import { Redirect } from 'react-router-dom';
-import { MoviesService } from '../../shared/services';
-
-const movieServices = new MoviesService();
+import { movieService } from '../../shared/services';
 
 class MoviesList extends React.Component<any,
   {
@@ -50,7 +48,7 @@ class MoviesList extends React.Component<any,
   private getMovieList() {
     const genreId = get(this.props, 'match.params.genreId');
     if (genreId) {
-      movieServices.getMoviesByGenre(genreId, this.state.pageNumber)
+      movieService.getMoviesByGenre(genreId, this.state.pageNumber)
         .then((response: any) => {
           this.setState({...this.state, movieList: [...this.state.movieList, ...response.data]}, () => {
             document.addEventListener('scroll', this.trackScrolling);

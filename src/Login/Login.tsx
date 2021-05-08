@@ -1,7 +1,7 @@
 import React from 'react';
 import { Button, FormControl, InputLabel, Input } from '@material-ui/core';
 import { connect, useSelector } from 'react-redux';
-import { UserService } from '../shared/services';
+import { userService } from '../shared/services';
 import { userLogin } from '../shared/store/actions';
 import { get } from 'lodash';
 import './Login.scss';
@@ -16,8 +16,6 @@ const mapDispatchToProps = (dispatch: any) => {
     userLogin: (payload: any) => dispatch(userLogin(payload))
   };
 };
-
-const userService = new UserService();
 
 class Login extends React.Component< any , { username: string, password: string, redirectPath: string }> {
   private storeData: any;

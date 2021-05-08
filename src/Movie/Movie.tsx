@@ -3,13 +3,11 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';
 import { config } from '../shared/functions';
-import { MoviesService } from '../shared/services';
+import { movieService } from '../shared/services';
 import { userLogin } from '../shared/store/actions';
 import './Movie.scss';
 import { Movies } from '../shared/interfaces';
 import {get, map} from 'lodash';
-
-const movieService = new MoviesService();
 
 const styles = (theme: any) => ({
   posterContainer: {
@@ -35,16 +33,14 @@ class Movie extends React.Component<any, {movie?: Movies, recommendedTitles: str
   }
   
   public componentDidMount() {
-    // if (!get(this.props, 'location.state.movie')) {
-      const movieId = get(this.props, 'match.params.movieId');
-      movieService.getMovie(movieId)
+    const movieId = get(this.props, 'match.params.movieId');
+    movieService.getMovie(movieId)
         .then((response) => {
           this.setState({...this.state, movie: response.data}, () => {
             this.getMovieRecommendedTitles();
           });
         })
         .catch((e) => console.log(e));
-    // }
   }
   
   private getMovieRecommendedTitles() {
