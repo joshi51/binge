@@ -4,13 +4,58 @@ import MenuIcon from '@material-ui/icons/Menu';
 import { connect } from 'react-redux';
 import { globalCss } from '../shared/material-ui-global';
 import './BingeNav.scss';
-import { get, isEmpty, isEqual } from 'lodash';
+import { get, isEmpty, isEqual, map } from 'lodash';
 import { userLogin } from '../shared/store/actions';
+import SearchIcon from '@material-ui/icons/Search';
+import InputBase from '@material-ui/core/InputBase';
+import { fade } from '@material-ui/core/styles';
+import {movieService} from '../shared/services';
+import { config } from '../shared/functions';
+import {Redirect} from 'react-router-dom';
 
-const styles = (theme: any) => ({
+const styles: any = (theme: any) => ({
   whiteLink: globalCss.whiteLink,
-  headerBar: {
+  headśerBar: {
     backgroundColor: '#242530'
+  },
+  search: {
+    position: 'relative',
+    borderRadius: theme.shape.borderRadius,
+    backgroundColor: fade(theme.palette.common.white, 0.15),
+    '&:hover': {
+      backgroundColor: fade(theme.palette.common.white, 0.25),
+    },
+    marginLeft: 0,
+    width: '100%',
+    [theme.breakpoints.up('sm')]: {
+      marginLeft: theme.spacing(1),
+      width: 'auto',
+    },
+  },
+  searchIcon: {
+    padding: theme.spacing(0, 2),
+    height: '100%',
+    position: 'absolute',
+    pointerEvents: 'none',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  inputRoot: {
+    color: 'inherit',
+  },
+  inputInput: {
+    padding: theme.spacing(1, 1, 1, 0),
+    // vertical padding + font size from searchIcon
+    paddingLeft: `calc(1em + ${theme.spacing(4)}px)`,
+    transition: theme.transitions.create('width'),
+    width: '100%',
+    [theme.breakpoints.up('sm')]: {
+      width: '12ch',
+      '&:focus': {
+        width: '20ch',
+      },
+    },
   }
 });
 
@@ -24,13 +69,23 @@ const mapDispatchToProps = (dispatch: any) => {
   };
 };
 
-class BingeNav extends React.Component<any, { user: any }> {
+const defaultImage = 'https://res.cloudinary.com/dayo7ui1r/image/upload/w_360,h_360/v1590687559/Binge/genres/drama.png';
+
+class BingeNav extends React.Component<any, { user: any, searchValue: string, searchResults: any, redirectPath: string, selectedMovie: any }> {
+  private config = config();
   constructor(props: any) {
     super(props);
     this.state = {
-      user: {}
+      user: {},
+      searchValue: '',
+      searchResults: [],
+      redirectPath: '',
+      selectedMovie: {}
     };
     this.renderHeaderItems = this.renderHeaderItems.bind(this);
+    this.handleSearchChange = this.handleSearchChange.bind(this);
+    this.renderSearchResults = this.renderSearchResults.bind(this);
+    this.navigateToMovie = this.navigateToMovie.bind(this);
   }
 
   public componentDidMount() {
@@ -78,21 +133,70 @@ class BingeNav extends React.Component<any, { user: any }> {
     }
   }
 
+  private navigateToMovie(movie: any) {
+    this.setState({...this.state, redirectPath: `/movie/${movie.id}`, selectedMovie: movie});
+  }
+
+  private renderSearchResults() {
+    return map(this.state.searchResults, (movie: any) => {
+      return (<div className="result-ul" key={movie.id} onClick={() => this.navigateToMovie(movie)}>
+        {movie.poster ? 
+        <div className="image" style={{background: `url("${this.config.tmdbImageEndpoint1280}${movie.poster}") center center / cover`}}/> : 
+        <div className="image" style={{background: `url("${defaultImage}") center center / cover`}}/>}
+      <span>{movie.title}</span>
+    </div>)
+    })
+  }
+
+  private handleSearchChange(event: any) {
+    event.preventDefault();
+    this.setState({...this.state, searchValue: event.currentTarget.value}, () => {
+      if (this.state.searchValue.length > 2) {
+        movieService.searchMovie(this.state.searchValue)
+        .then(response => {
+          this.setState({...this.state, searchResults: response.data})
+        })
+        .catch(err => console.log(err));
+      } else {
+        this.setState({...this.state, searchResults: []});
+      }
+    });
+  }
+
   public render() {
     const { classes }: any = this.props;
-    return (
-      <AppBar position="static" className={classes.headerBar}>
-        <Toolbar>
-          <IconButton edge="start" color="inherit" aria-label="menu">
-            <MenuIcon />
-          </IconButton>
-          <Typography className="header-left" variant="h6">
-            <Link className={classes.whiteLink} href="/">Binge</Link>
-          </Typography>
-          {this.renderHeaderItems()}
-        </Toolbar>
-      </AppBar>
-    );
+    if (this.state.redirectPath) {
+      return <Redirect to={{pathname: this.state.redirectPath, state: {movie: this.state.selectedMovie}}} push/>;
+    } else {
+      return (
+        <AppBar position="static" className={classes.headerBar}>
+          <Toolbar>
+            <IconButton edge="start" color="inherit" aria-label="menu">
+              <MenuIcon />
+            </IconButton>
+            <p className="header-left">
+              <Link className={classes.whiteLink} href="/">Binge</Link>
+            </p>
+            <div className={classes.search}>
+              <div className={classes.searchIcon}>
+                <SearchIcon />
+              </div>
+              <InputBase
+                placeholder="Search…"
+                classes={{
+                  root: classes.inputRoot,
+                  input: classes.inputInput,
+                }}
+                inputProps={{ 'aria-label': 'search' }}
+                value={this.state.searchValue} onChange={this.handleSearchChange}
+              />
+              <div className="search-results">{this.renderSearchResults()}</div>
+            </div>
+            {this.renderHeaderItems()}
+          </Toolbar>
+        </AppBar>
+      );
+    }
   }
 }
 

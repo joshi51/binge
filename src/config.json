@@ -1,7 +1,7 @@
 {
   "development": {
     "serverEndpoint": "http://localhost:1100",
-    "pythonServerEndpoint": "http://localhost:5000",
+    "pythonServerEndpoint": "https://binge-python.herokuapp.com",
     "tmdbImageEndpoint": "https://image.tmdb.org/t/p/w500",
     "tmdbImageEndpoint780": "https://image.tmdb.org/t/p/w780",
     "tmdbImageEndpoint1280": "https://image.tmdb.org/t/p/w1280"

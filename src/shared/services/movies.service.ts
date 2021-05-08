@@ -2,7 +2,7 @@ import axios from 'axios';
 import {config} from '../functions';
 const env = config();
 
-export class MoviesService {
+class MoviesService {
   public getMovie(id: number) {
     return axios.get(`${env.serverEndpoint}/movie/${id}`);
   }
@@ -26,4 +26,12 @@ export class MoviesService {
   public getMovieRecommendations(title: string) {
     return axios.post(`${env.pythonServerEndpoint}/search`, {name: title});
   }
+
+  public searchMovie(title: string) {
+    return axios.get(`${env.serverEndpoint}/search/movie/${title}`);
+  }
 }
+
+const movieService = new MoviesService();
+
+export {movieService};
