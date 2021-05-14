@@ -1,5 +1,5 @@
 import React from 'react';
-import { AppBar, IconButton, Typography, Button, Toolbar, Link, withStyles } from '@material-ui/core';
+import { AppBar, IconButton, Button, Toolbar, Link, withStyles } from '@material-ui/core';
 import MenuIcon from '@material-ui/icons/Menu';
 import { connect } from 'react-redux';
 import { globalCss } from '../shared/material-ui-global';
@@ -9,13 +9,12 @@ import { userLogin } from '../shared/store/actions';
 import SearchIcon from '@material-ui/icons/Search';
 import InputBase from '@material-ui/core/InputBase';
 import { fade } from '@material-ui/core/styles';
-import {movieService} from '../shared/services';
+import { movieService } from '../shared/services';
 import { config } from '../shared/functions';
-import {Redirect} from 'react-router-dom';
 
 const styles: any = (theme: any) => ({
   whiteLink: globalCss.whiteLink,
-  headśerBar: {
+  headerBar: {
     backgroundColor: '#242530'
   },
   search: {
@@ -71,7 +70,7 @@ const mapDispatchToProps = (dispatch: any) => {
 
 const defaultImage = 'https://res.cloudinary.com/dayo7ui1r/image/upload/w_360,h_360/v1590687559/Binge/genres/drama.png';
 
-class BingeNav extends React.Component<any, { user: any, searchValue: string, searchResults: any, redirectPath: string, selectedMovie: any }> {
+class BingeNav extends React.Component<any, { user: any, searchValue: string, searchResults: any, selectedMovie: any }> {
   private config = config();
   constructor(props: any) {
     super(props);
@@ -79,13 +78,11 @@ class BingeNav extends React.Component<any, { user: any, searchValue: string, se
       user: {},
       searchValue: '',
       searchResults: [],
-      redirectPath: '',
       selectedMovie: {}
     };
     this.renderHeaderItems = this.renderHeaderItems.bind(this);
     this.handleSearchChange = this.handleSearchChange.bind(this);
     this.renderSearchResults = this.renderSearchResults.bind(this);
-    this.navigateToMovie = this.navigateToMovie.bind(this);
   }
 
   public componentDidMount() {
@@ -108,7 +105,7 @@ class BingeNav extends React.Component<any, { user: any, searchValue: string, se
   }
 
   public componentWillUnmount() {
-    this.setState = (state,callback)=>{
+    this.setState = (state, callback) => {
       return;
     };
   }
@@ -133,70 +130,64 @@ class BingeNav extends React.Component<any, { user: any, searchValue: string, se
     }
   }
 
-  private navigateToMovie(movie: any) {
-    this.setState({...this.state, redirectPath: `/movie/${movie.id}`, selectedMovie: movie});
-  }
-
   private renderSearchResults() {
     return map(this.state.searchResults, (movie: any) => {
-      return (<div className="result-ul" key={movie.id} onClick={() => this.navigateToMovie(movie)}>
-        {movie.poster ? 
-        <div className="image" style={{background: `url("${this.config.tmdbImageEndpoint1280}${movie.poster}") center center / cover`}}/> : 
-        <div className="image" style={{background: `url("${defaultImage}") center center / cover`}}/>}
-      <span>{movie.title}</span>
-    </div>)
+      return (<Link href={`/movie/${movie.id}`} key={movie.id}>
+        <div className="result-ul">
+          {movie.poster ?
+            <div className="image" style={{ background: `url("${this.config.tmdbImageEndpoint1280}${movie.poster}") center center / cover` }} /> :
+            <div className="image" style={{ background: `url("${defaultImage}") center center / cover` }} />}
+          <span>{movie.title}</span>
+        </div>
+      </Link>)
     })
   }
 
   private handleSearchChange(event: any) {
     event.preventDefault();
-    this.setState({...this.state, searchValue: event.currentTarget.value}, () => {
+    this.setState({ ...this.state, searchValue: event.currentTarget.value }, () => {
       if (this.state.searchValue.length > 2) {
         movieService.searchMovie(this.state.searchValue)
-        .then(response => {
-          this.setState({...this.state, searchResults: response.data})
-        })
-        .catch(err => console.log(err));
+          .then(response => {
+            this.setState({ ...this.state, searchResults: response.data })
+          })
+          .catch(err => console.log(err));
       } else {
-        this.setState({...this.state, searchResults: []});
+        this.setState({ ...this.state, searchResults: [] });
       }
     });
   }
 
   public render() {
     const { classes }: any = this.props;
-    if (this.state.redirectPath) {
-      return <Redirect to={{pathname: this.state.redirectPath, state: {movie: this.state.selectedMovie}}} push/>;
-    } else {
-      return (
-        <AppBar position="static" className={classes.headerBar}>
-          <Toolbar>
-            <IconButton edge="start" color="inherit" aria-label="menu">
-              <MenuIcon />
-            </IconButton>
-            <p className="header-left">
-              <Link className={classes.whiteLink} href="/">Binge</Link>
-            </p>
-            <div className={classes.search}>
-              <div className={classes.searchIcon}>
-                <SearchIcon />
-              </div>
-              <InputBase
-                placeholder="Search…"
-                classes={{
-                  root: classes.inputRoot,
-                  input: classes.inputInput,
-                }}
-                inputProps={{ 'aria-label': 'search' }}
-                value={this.state.searchValue} onChange={this.handleSearchChange}
-              />
-              <div className="search-results">{this.renderSearchResults()}</div>
+    return (
+      <AppBar position="static" className={classes.headerBar}>
+        <Toolbar>
+          <IconButton edge="start" color="inherit" aria-label="menu">
+            <MenuIcon />
+          </IconButton>
+          <p className="header-left">
+            <Link className={classes.whiteLink} href="/">Binge</Link>
+          </p>
+          <div className={classes.search}>
+            <div className={classes.searchIcon}>
+              <SearchIcon />
             </div>
-            {this.renderHeaderItems()}
-          </Toolbar>
-        </AppBar>
-      );
-    }
+            <InputBase
+              placeholder="Search…"
+              classes={{
+                root: classes.inputRoot,
+                input: classes.inputInput,
+              }}
+              inputProps={{ 'aria-label': 'search' }}
+              value={this.state.searchValue} onChange={this.handleSearchChange}
+            />
+            <div className="search-results">{this.renderSearchResults()}</div>
+          </div>
+          {this.renderHeaderItems()}
+        </Toolbar>
+      </AppBar>
+    );
   }
 }
 
